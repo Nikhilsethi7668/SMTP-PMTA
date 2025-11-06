@@ -1,26 +1,38 @@
-
 import React from 'react';
-import { AuthProvider, useAuth } from './hooks/useAuth';
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
-import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useAuthStore } from './store/useAuthStore';
 
-const App: React.FC = () => {
-  return (
-    <AuthProvider>
-      <AppContent />
-    </AuthProvider>
-  );
+const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const user = useAuthStore((state) => state.user);
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+  return <>{children}</>;
 };
 
-const AppContent: React.FC = () => {
-  const { user } = useAuth();
+const App: React.FC = () => {
+  const user = useAuthStore((state) => state.user);
 
   return (
     <HashRouter>
       <Routes>
-        <Route path="/login" element={!user ? <LoginPage /> : <Navigate to="/" />} />
-        <Route path="/*" element={user ? <DashboardPage /> : <Navigate to="/login" />} />
+        {/* Login */}
+        <Route path="/login" element={!user ? <LoginPage /> : <Navigate to="/" replace />} />
+
+        {/* Dashboard and subroutes */}
+        <Route
+          path="/*"
+          element={
+            <ProtectedRoute>
+              <DashboardPage />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Fallback */}
+        <Route path="*" element={<Navigate to={user ? '/' : '/login'} replace />} />
       </Routes>
     </HashRouter>
   );
