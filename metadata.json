@@ -1,0 +1,5 @@
+{
+  "name": "Copy of SMTP Admin Power Panel",
+  "description": "A comprehensive admin panel and user dashboard for managing a PowerMTA-backed SMTP service. It includes features for user management, credit accounting, SMTP credential generation, and sending analytics.",
+  "requestFramePermissions": []
+}
