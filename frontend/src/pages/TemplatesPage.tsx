@@ -6,7 +6,7 @@ import { Modal } from '../components/ui/Modal';
 import { Spinner } from '../components/ui/Spinner';
 import { Skeleton } from '../components/ui/Skeleton';
 import { api } from '../services/mockApi';
-import { Template } from '../types';
+import type { Template } from '../types';
 import { FileCode, PlusCircle, Edit, Trash2 } from 'lucide-react';
 import { useAuthStore } from '../store/useAuthStore';
 

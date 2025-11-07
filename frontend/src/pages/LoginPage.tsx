@@ -16,7 +16,7 @@ const LoginPage: React.FC = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     await login(email || `${role}@example.com`, role);
-    navigate('/dashboard');
+    navigate('/');
   };
 
   return (
@@ -38,7 +38,7 @@ const LoginPage: React.FC = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="e.g., user@example.com"
-                  className="pl-10"
+                  className="pl-10 text-white"
                 />
               </div>
             </div>
@@ -50,12 +50,12 @@ const LoginPage: React.FC = () => {
                 <Input
                   type="password"
                   defaultValue="password123"
-                  className="pl-10"
+                  className="pl-10 text-white"
                 />
               </div>
             </div>
 
-            <div>
+            {/* <div>
               <label className="block text-sm font-medium text-gray-300 mb-2">Select Role</label>
               <div className="relative">
                 <Shield className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -69,7 +69,7 @@ const LoginPage: React.FC = () => {
                   <option value={UserRole.SUPERADMIN}>Superadmin</option>
                 </select>
               </div>
-            </div>
+            </div> */}
 
             {error && <p className="text-red-400 text-sm">{error}</p>}
 

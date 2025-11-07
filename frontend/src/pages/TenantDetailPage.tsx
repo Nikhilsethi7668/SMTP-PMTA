@@ -8,7 +8,7 @@ import { Skeleton } from '../components/ui/Skeleton';
 import { UsageChart } from '../components/UsageChart';
 import { DollarSign, PlusCircle, Key, Send, BarChart2, Shield, FileText } from 'lucide-react';
 import { api } from '../services/mockApi';
-import {
+import type {
   Tenant,
   CreditBalance,
   SmtpCredential,

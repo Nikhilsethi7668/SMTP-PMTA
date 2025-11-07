@@ -7,7 +7,8 @@ import { Input } from '../components/ui/Input';
 import { Spinner } from '../components/ui/Spinner';
 import { Skeleton } from '../components/ui/Skeleton';
 import { api } from '../services/mockApi';
-import { User, UserRole } from '../types';
+import  { type User } from '../types';
+import { UserRole } from '../types';
 import { Users } from 'lucide-react';
 import { useAuthStore } from '../store/useAuthStore'; // ✅ Zustand store import
 

@@ -6,8 +6,8 @@ import { Button } from '../components/ui/Button';
 import { Spinner } from '../components/ui/Spinner';
 import { Skeleton } from '../components/ui/Skeleton';
 import { api } from '../services/mockApi';
-import { Suppression } from '../types';
-import { useAuth } from '../hooks/useAuth';
+import type { Suppression } from '../types';
+import { useAuthStore } from '../store/useAuthStore';
 
 const SuppressionsPage: React.FC = () => {
     const [suppressions, setSuppressions] = useState<Suppression[]>([]);
@@ -15,9 +15,9 @@ const SuppressionsPage: React.FC = () => {
     const [newEmail, setNewEmail] = useState('');
     const [isAdding, setIsAdding] = useState(false);
     const [error, setError] = useState('');
-    const { user } = useAuth();
 
-    const tenantId = user!.tenantId;
+    const user = useAuthStore((state) => state.user);
+    const tenantId = user?.tenantId!;
 
     const fetchSuppressions = useCallback(async () => {
         const data = await api.getSuppressions(tenantId);
@@ -31,7 +31,7 @@ const SuppressionsPage: React.FC = () => {
 
     const handleAddSuppression = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!newEmail || !user) return;
+        if (!newEmail || !tenantId || !user) return;
         setIsAdding(true);
         setError('');
         try {
@@ -69,7 +69,10 @@ const SuppressionsPage: React.FC = () => {
             <Card>
                 <div className="p-6">
                     <h2 className="text-2xl font-semibold mb-4">Suppression List</h2>
-                    <p className="text-gray-400 mb-6">Emails on this list will be blocked from receiving messages. This includes automatic additions from bounces and complaints.</p>
+                    <p className="text-gray-400 mb-6">
+                        Emails on this list will be blocked from receiving messages. 
+                        This includes automatic additions from bounces and complaints.
+                    </p>
                     <form onSubmit={handleAddSuppression} className="flex items-center gap-2 mb-6 max-w-lg">
                         <Input 
                             type="email" 
@@ -79,8 +82,14 @@ const SuppressionsPage: React.FC = () => {
                             required
                             className="flex-grow"
                         />
-                         <Button type="submit" disabled={isAdding}>
-                            {isAdding ? <><Spinner size="sm" className="mr-2" /> Adding...</> : 'Add to List'}
+                        <Button type="submit" disabled={isAdding}>
+                            {isAdding ? (
+                                <>
+                                    <Spinner size="sm" className="mr-2" /> Adding...
+                                </>
+                            ) : (
+                                'Add to List'
+                            )}
                         </Button>
                     </form>
                     {error && <p className="text-red-400 mb-4">{error}</p>}

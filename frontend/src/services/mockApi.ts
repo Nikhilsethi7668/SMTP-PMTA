@@ -1,5 +1,5 @@
 import { UserRole } from '../constants';
-import { Tenant, User, SmtpCredential, CreditBalance, CreditTransaction, Message, AuditLog, UsageData, Suppression, Domain, MessageStatus, MessageEvent, Template } from '../types';
+import type { Tenant, User, SmtpCredential, CreditBalance, CreditTransaction, Message, AuditLog, UsageData, Suppression, Domain, MessageStatus, MessageEvent, Template } from '../types';
 import { faker } from '@faker-js/faker';
 
 // --- MOCK DATABASE ---
@@ -57,7 +57,7 @@ const initializeMockData = () => {
         creditBalances.push({
             id: `cb_${tenant.id}`,
             tenantId: tenant.id,
-            balance: parseFloat(faker.finance.amount(100, 10000, 2)),
+            balance: faker.number.float({ min: 100, max: 10000, fractionDigits: 2 }),
             currency: 'USD',
         });
 
@@ -301,7 +301,7 @@ export const api = {
         }, 3000);
         return newMessage;
     },
-    getUsageData: async (tenantId: string): Promise<UsageData[]> => {
+    getUsageData: async (_tenantId: string): Promise<UsageData[]> => {
         await delay(600);
         const data: UsageData[] = [];
         for (let i = 29; i >= 0; i--) {

@@ -5,7 +5,7 @@ import { Table } from '../components/ui/Table';
 import { Button } from '../components/ui/Button';
 import { Skeleton } from '../components/ui/Skeleton';
 import { api } from '../services/mockApi';
-import { Tenant } from '../types';
+import type { Tenant } from '../types';
 
 const TenantListPage: React.FC = () => {
     const [tenants, setTenants] = useState<Tenant[]>([]);

@@ -4,7 +4,7 @@ import { Skeleton } from '../components/ui/Skeleton';
 import { UsageChart } from '../components/UsageChart';
 import { Table } from '../components/ui/Table';
 import { api } from '../services/mockApi';
-import { CreditBalance, Message, UsageData } from '../types';
+import type { CreditBalance, Message, UsageData } from '../types';
 import { useAuthStore } from '../store/useAuthStore';
 import { DollarSign, Send, FileText, BarChart2 } from 'lucide-react';
 

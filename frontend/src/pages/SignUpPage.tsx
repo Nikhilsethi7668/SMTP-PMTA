@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { Card } from '../components/ui/Card';
 import { Input } from '../components/ui/Input';
 import { Button } from '../components/ui/Button';
 import { Mail, User, Building, Key } from 'lucide-react';
+import api from '../axiosInstance';
+import { useNavigate } from 'react-router-dom';
 
 const SignUpPage: React.FC = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: '',
     username: '',
@@ -35,16 +37,17 @@ const SignUpPage: React.FC = () => {
 
     setLoading(true);
     try {
-      const response = await axios.post('https://api.yourdomain.com/signup', {
+      const response = await api.post('/auth/signup', {
         fullName: formData.fullName,
         username: formData.username,
         email: formData.email,
-        company: formData.company,
+        companyName: formData.company,
         password: formData.password,
       });
 
       if (response.status === 200 || response.status === 201) {
         setSuccess('Account created successfully!');
+        navigate(`/verify-email?email=${formData.email}`);
         setFormData({
           fullName: '',
           username: '',
@@ -81,7 +84,7 @@ const SignUpPage: React.FC = () => {
                   value={formData.fullName}
                   onChange={handleChange}
                   placeholder="John Doe"
-                  className="pl-10"
+                  className="pl-10 text-white"
                 />
               </div>
             </div>
@@ -96,7 +99,7 @@ const SignUpPage: React.FC = () => {
                   value={formData.username}
                   onChange={handleChange}
                   placeholder="johndoe"
-                  className="pl-10"
+                  className="pl-10 text-white"
                 />
               </div>
             </div>
@@ -112,7 +115,7 @@ const SignUpPage: React.FC = () => {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="you@company.com"
-                  className="pl-10"
+                  className="pl-10 text-white"
                 />
               </div>
             </div>
@@ -129,7 +132,7 @@ const SignUpPage: React.FC = () => {
                   value={formData.company}
                   onChange={handleChange}
                   placeholder="Acme Inc."
-                  className="pl-10"
+                  className="pl-10 text-white"
                 />
               </div>
             </div>
@@ -145,7 +148,7 @@ const SignUpPage: React.FC = () => {
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="Enter password"
-                  className="pl-10"
+                  className="pl-10 text-white"
                 />
               </div>
             </div>
@@ -161,7 +164,7 @@ const SignUpPage: React.FC = () => {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   placeholder="Re-enter password"
-                  className="pl-10"
+                  className="pl-10 text-white"
                 />
               </div>
             </div>

@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { ResponsiveContainer, BarChart, XAxis, YAxis, Tooltip, Legend, Bar, CartesianGrid } from 'recharts';
-import { UsageData } from '../types';
+import type { UsageData } from '../types';
 
 interface UsageChartProps {
     data: UsageData[];
