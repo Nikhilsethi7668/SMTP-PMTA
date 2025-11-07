@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Card } from '../components/ui/Card';
-import { Button } from '../components/ui/Button';
+import { Card } from '../components/ui/card';
+import { Button } from '../components/ui/button';
 import { Modal } from '../components/ui/Modal';
-import { Spinner } from '../components/ui/Spinner';
+import { Spinner } from '../components/ui/spinner';
 import { Skeleton } from '../components/ui/Skeleton';
 import { UsageChart } from '../components/UsageChart';
 import { DollarSign, PlusCircle, Key, Send, BarChart2, Shield, FileText } from 'lucide-react';
@@ -17,12 +17,12 @@ import type {
   UsageData,
   AuditLog,
 } from '../types';
-import { useAuthStore } from '../store/useAuthStore';
+import { useUserStore } from '../store/useUserStore';
 import { Table } from '../components/ui/Table';
 
 const TenantDetailPage: React.FC = () => {
   const { tenantId } = useParams<{ tenantId: string }>();
-  const user = useAuthStore((state) => state.user);
+  const user = useUserStore((state) => state.user);
 
   const [details, setDetails] = useState<{
     tenant: Tenant;
@@ -39,7 +39,7 @@ const TenantDetailPage: React.FC = () => {
   const [topUpAmount, setTopUpAmount] = useState(100);
   const [isCreatingCredential, setCreatingCredential] = useState(false);
 
-  const tenantIdOrDefault = tenantId || user?.tenantId;
+  const tenantIdOrDefault = "";
 
   useEffect(() => {
     if (!tenantIdOrDefault) return;
@@ -196,7 +196,7 @@ const TenantDetailPage: React.FC = () => {
             >
               {isCreatingCredential ? (
                 <>
-                  <Spinner size="sm" className="mr-2" />
+                  <Spinner className="mr-2" />
                   Creating...
                 </>
               ) : (

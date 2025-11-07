@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Card } from '../components/ui/Card';
+import { Card } from '../components/ui/card';
 import { Skeleton } from '../components/ui/Skeleton';
 import { UsageChart } from '../components/UsageChart';
 import { Table } from '../components/ui/Table';
 import { api } from '../services/mockApi';
 import type { CreditBalance, Message, UsageData } from '../types';
-import { useAuthStore } from '../store/useAuthStore';
+import { useUserStore } from '../store/useUserStore';
 import { DollarSign, Send, FileText, BarChart2 } from 'lucide-react';
 
 const UserDashboardPage: React.FC = () => {
-  const user = useAuthStore((state) => state.user);
+  const user = useUserStore((state) => state.user);
   const [data, setData] = useState<{
     balance: CreditBalance;
     messages: Message[];
@@ -22,9 +22,9 @@ const UserDashboardPage: React.FC = () => {
     setLoading(true);
 
     Promise.all([
-      api.getTenantDetails(user.tenantId),
-      api.getMessages(user.tenantId),
-      api.getUsageData(user.tenantId),
+      api.getTenantDetails(user.user_id),
+      api.getMessages(user.user_id),
+      api.getUsageData(user.user_id),
     ]).then(([{ balance }, messagesData, usageData]) => {
       setData({ balance, messages: messagesData, usage: usageData });
       setLoading(false);

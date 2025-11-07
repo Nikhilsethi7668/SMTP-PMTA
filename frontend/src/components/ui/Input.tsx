@@ -1,13 +1,39 @@
+import * as React from "react";
+import { cn } from "@/lib/utils";
 
-import React from 'react';
+interface EmailInputProps extends React.ComponentProps<"input"> {
+  onChangeEvent?: (email: string) => void;
+}
 
-type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
+const Input = React.forwardRef<HTMLInputElement, EmailInputProps>(
+  ({ className, type = "text", onChangeEvent, value, onChange, ...props }, ref) => {
+    const [internalValue, setInternalValue] = React.useState<string>("");
 
-export const Input: React.FC<InputProps> = ({ className, ...props }) => {
-  return (
-    <input
-      className={`w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${className}`}
-      {...props}
-    />
-  );
-};
+    const isControlled = value !== undefined;
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const newValue = e.target.value;
+      if (!isControlled) setInternalValue(newValue);
+      onChange?.(e);
+      onChangeEvent?.(newValue);
+    };
+
+    return (
+      <input
+        ref={ref}
+        type={type}
+        value={isControlled ? (value as string) : internalValue}
+        onChange={handleChange}
+        className={cn(
+          "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+          className
+        )}
+        {...props}
+      />
+    );
+  }
+);
+
+Input.displayName = "Input";
+
+export { Input };

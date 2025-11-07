@@ -1,45 +1,187 @@
-import React from 'react';
-import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
-import LoginPage from './pages/LoginPage';
-import DashboardPage from './pages/DashboardPage';
-import { useAuthStore } from './store/useAuthStore';
-import SignUpPage from './pages/SignUpPage';
-import EmailVerify from './pages/EmailVerify';
+import { ThemeProvider } from "@/components/theme-provider"
+import { Toaster } from "@/components/ui/toaster"
+import { Toaster as Sonner } from "@/components/ui/sonner"
+import { TooltipProvider } from "@/components/ui/tooltip"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 
-const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const user = useAuthStore((state) => state.user);
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
-  return <>{children}</>;
-};
+// import your pages and ProtectedRoute here...
+// import Index from "./pages/Index"
+import Contact from "./pages/Contact"
+import NotFound from "./pages/NotFound"
+import EmailVerify from "./pages/EmailVerify"
+import Login from "./pages/auth/Login"
+import Signup from "./pages/auth/Singup"
+import DashboardPage from "./pages/DashboardPage"
+// import AccountConnect from "./pages/account/AccountConnect"
+// import { Campaigns } from "./pages/Campaigns"
+// import { CreateCampaignForm } from "./pages/campaigns/CreateCampaign"
+// import { CampaignDetails } from "./pages/campaigns/CampaignDetails"
+// import Analytics from "./pages/Analytics"
+// import ApiKeysPage from "./pages/KeyPage"
+// import { VerifyUserEmail } from "./pages/account/VerifyUserEmail"
+// import { ContactsPage } from "./pages/ConatctsPage"
+// import { Template } from "./pages/Templates"
+// import SettingsPage from "./pages/settings/SettingsPage"
+// import UniBox from "./pages/UniBox"
+// import { Crm } from "./pages/Crm"
+// import CustomConnect from "./pages/account/CustomConnect"
+import { ProtectedRoute } from "./ProtectedRoute"
+// import EmailAccounts from "./pages/EmailAccounts"
+// import Domain from "./pages/Domain"
 
-const App: React.FC = () => {
-  const user = useAuthStore((state) => state.user);
+const queryClient = new QueryClient()
 
+function App() {
   return (
-    <HashRouter>
-      <Routes>
-        {/* Login */}
-        <Route path="/login" element={!user ? <LoginPage /> : <Navigate to="/" replace />} />
-        <Route path="/signup" element={<SignUpPage/>} />
-        <Route path="/verify-email" element={<EmailVerify/>} />
-        
-        {/* Dashboard and subroutes */}
-        <Route
-          path="/*"
-          element={
-            <ProtectedRoute>
-              <DashboardPage />
-            </ProtectedRoute>
-          }
-        />
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          {/* ✅ Global notifications */}
+          <Toaster />
+          <Sonner position="top-center" richColors />
 
-        {/* Fallback */}
-        <Route path="*" element={<Navigate to={user ? '/' : '/login'} replace />} />
-      </Routes>
-    </HashRouter>
-  );
-};
+          {/* ✅ Routing */}
+          <BrowserRouter>
+            <Routes>
+              {/* PUBLIC ROUTES */}
+              <Route path="/" element={<Login />} />
+              <Route path="/auth/login" element={<Login />} />
+              <Route path="/auth/signup" element={<Signup />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/verify-email" element={<EmailVerify />} />
+              {/* <Route path="/keys" element={<ApiKeysPage />} /> */}
 
-export default App;
+              {/* PROTECTED ROUTES */}
+              <Route
+                path="/app/dashboard"
+                element={
+                  <ProtectedRoute>
+                    <DashboardPage />
+                  </ProtectedRoute>
+                }
+              />
+              {/* <Route
+                path="/app/dashboard/accounts/connect"
+                element={
+                  <ProtectedRoute>
+                    <AccountConnect />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/app/dashboard/accounts/connect/custom"
+                element={
+                  <ProtectedRoute>
+                    <CustomConnect />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/app/dashboard/accounts"
+                element={
+                  <ProtectedRoute>
+                    <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/app/dashboard/contacts"
+                element={
+                  <ProtectedRoute>
+                    <ContactsPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/app/dashboard/templates"
+                element={
+                  <ProtectedRoute>
+                    <Template />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/app/dashboard/settings"
+                element={
+                  <ProtectedRoute>
+                    <SettingsPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/app/dashboard/unibox"
+                element={
+                  <ProtectedRoute>
+                    <UniBox />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/app/dashboard/campaigns"
+                element={
+                  <ProtectedRoute>
+                    <Campaigns />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/app/dashboard/campaigns/details"
+                element={
+                  <ProtectedRoute>
+                    <CampaignDetails />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/app/dashboard/campaigns/create"
+                element={
+                  <ProtectedRoute>
+                    <CreateCampaignForm />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/app/analytics"
+                element={
+                  <ProtectedRoute>
+                    <Analytics />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/app/domains"
+                element={
+                  <ProtectedRoute>
+                    <Domain />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/app/email-accounts"
+                element={
+                  <ProtectedRoute>
+                    <EmailAccounts />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/app/crm"
+                element={
+                  <ProtectedRoute>
+                    <Crm />
+                  </ProtectedRoute>
+                }
+              /> */}
+
+              {/* CATCH-ALL */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </QueryClientProvider>
+    </ThemeProvider>
+  )
+}
+
+export default App
