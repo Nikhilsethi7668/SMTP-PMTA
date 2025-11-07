@@ -18,7 +18,7 @@ import type {
   AuditLog,
 } from '../types';
 import { useUserStore } from '../store/useUserStore';
-import { Table } from '../components/ui/Table';
+import { Table } from '../../../../Table';
 
 const TenantDetailPage: React.FC = () => {
   const { tenantId } = useParams<{ tenantId: string }>();

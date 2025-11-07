@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card } from '../components/ui/card';
 import { Skeleton } from '../components/ui/Skeleton';
 import { UsageChart } from '../components/UsageChart';
-import { Table } from '../components/ui/Table';
+import { Table } from '../../../../Table';
 import { api } from '../services/mockApi';
 import type { CreditBalance, Message, UsageData } from '../types';
 import { useUserStore } from '../store/useUserStore';
@@ -22,9 +22,9 @@ const UserDashboardPage: React.FC = () => {
     setLoading(true);
 
     Promise.all([
-      api.getTenantDetails(user.user_id),
-      api.getMessages(user.user_id),
-      api.getUsageData(user.user_id),
+      api.getTenantDetails("tenant_1"),
+      api.getMessages("tenant_1"),
+      api.getUsageData("tenant_1"),
     ]).then(([{ balance }, messagesData, usageData]) => {
       setData({ balance, messages: messagesData, usage: usageData });
       setLoading(false);

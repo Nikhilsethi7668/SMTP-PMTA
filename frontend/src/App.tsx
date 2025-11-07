@@ -17,7 +17,7 @@ import DashboardPage from "./pages/DashboardPage"
 // import { Campaigns } from "./pages/Campaigns"
 // import { CreateCampaignForm } from "./pages/campaigns/CreateCampaign"
 // import { CampaignDetails } from "./pages/campaigns/CampaignDetails"
-// import Analytics from "./pages/Analytics"
+import Analytics from "./pages/Analytics"
 // import ApiKeysPage from "./pages/KeyPage"
 // import { VerifyUserEmail } from "./pages/account/VerifyUserEmail"
 // import { ContactsPage } from "./pages/ConatctsPage"
@@ -27,6 +27,9 @@ import DashboardPage from "./pages/DashboardPage"
 // import { Crm } from "./pages/Crm"
 // import CustomConnect from "./pages/account/CustomConnect"
 import { ProtectedRoute } from "./ProtectedRoute"
+import { Campaigns } from "./pages/Campaigns"
+import { CampaignDetails } from "./pages/campaigns/CampaignDetails"
+import { CreateCampaignForm } from "./pages/campaigns/CreateCampaign"
 // import EmailAccounts from "./pages/EmailAccounts"
 // import Domain from "./pages/Domain"
 
@@ -116,9 +119,9 @@ function App() {
                     <UniBox />
                   </ProtectedRoute>
                 }
-              />
+              /> */}
               <Route
-                path="/app/dashboard/campaigns"
+                path="/app/campaigns"
                 element={
                   <ProtectedRoute>
                     <Campaigns />
@@ -126,7 +129,7 @@ function App() {
                 }
               />
               <Route
-                path="/app/dashboard/campaigns/details"
+                path="/app/campaigns/details"
                 element={
                   <ProtectedRoute>
                     <CampaignDetails />
@@ -134,7 +137,7 @@ function App() {
                 }
               />
               <Route
-                path="/app/dashboard/campaigns/create"
+                path="/app/campaigns/create"
                 element={
                   <ProtectedRoute>
                     <CreateCampaignForm />
@@ -149,15 +152,15 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-              <Route
+              {/* <Route
                 path="/app/domains"
                 element={
                   <ProtectedRoute>
                     <Domain />
                   </ProtectedRoute>
                 }
-              />
-              <Route
+              /> */}
+              {/* <Route
                 path="/app/email-accounts"
                 element={
                   <ProtectedRoute>

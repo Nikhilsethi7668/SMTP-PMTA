@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import api from "@/axiosInstance";
-import { Spinner } from "@/components/ui/spinner";
+import { Spinner } from "@/components/ui/Spinner";
 import { toast } from "sonner";
 import { useUserStore } from "@/store/useUserStore";
 
@@ -36,7 +36,7 @@ const Login = () => {
           used_month: data.used_month,
           rate_limit: data.rate_limit,
         });
-        navigate("/app/dashboard/accounts");
+        navigate("/app/dashboard");
       }
     } catch (error: any) {
       toast.error(error?.response?.data?.message || "Login failed");

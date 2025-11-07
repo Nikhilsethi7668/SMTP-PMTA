@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card } from '../components/ui/card';
-import { Table } from '../components/ui/Table';
+import { Table } from '../../../../Table';
 import { Button } from '../components/ui/button';
 import { Skeleton } from '../components/ui/Skeleton';
 import { api } from '../services/mockApi';

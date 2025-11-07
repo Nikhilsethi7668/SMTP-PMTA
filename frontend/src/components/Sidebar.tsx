@@ -12,6 +12,7 @@ import {
   Globe,
   FileText,
   FileCode,
+  Target,
 } from "lucide-react";
 import { useTheme } from "@/components/theme-provider";
 
@@ -97,6 +98,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setOpen }) => {
             {/* SUPERADMIN */}
             {user?.role === "superadmin" && (
               <NavItem to="/app/dashboard" icon={<Users className="h-5 w-5" />} label="Tenants" />
+              
             )}
 
             {/* ADMIN */}
@@ -108,6 +110,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setOpen }) => {
                 <NavItem to="/app/templates" icon={<FileCode className="h-5 w-5" />} label="Templates" />
                 <NavItem to="/app/suppressions" icon={<Ban className="h-5 w-5" />} label="Suppressions" />
                 <NavItem to="/app/team" icon={<Users className="h-5 w-5" />} label="Team" />
+                  <NavItem to="/app/campaigns" icon={<Target className="h-5 w-5" />} label="Campaigns" />
+                   <NavItem to="/app/analytics" icon={<Target className="h-5 w-5" />} label="Analytics" />
+
+                  
               </>
             )}
 
@@ -120,6 +126,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setOpen }) => {
                 <NavItem to="/app/domains" icon={<Globe className="h-5 w-5" />} label="Domains" />
                 <NavItem to="/app/templates" icon={<FileCode className="h-5 w-5" />} label="Templates" />
                 <NavItem to="/app/suppressions" icon={<Ban className="h-5 w-5" />} label="Suppressions" />
+                <NavItem to="/app/campaigns" icon={<Target className="h-5 w-5" />} label="Campaigns" />
+                <NavItem to="/app/analytics" icon={<Target className="h-5 w-5" />} label="Analytics" />
+                   
               </>
             )}
           </nav>
